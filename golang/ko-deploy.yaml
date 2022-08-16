@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-server
+spec:
+  selector:
+    matchLabels:
+      run: hello-server
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: hello-server
+          imagePullPolicy: IfNotPresent
+          image: ko://github.com/ericsmalling/ko-demo
+          ports:
+            - containerPort: 8080
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-server
+spec:
+  selector:
+    run: hello-server
+  ports:
+    - port: 80
+      targetPort: http
+  type: LoadBalancer
