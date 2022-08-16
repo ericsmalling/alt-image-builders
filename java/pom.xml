@@ -9,9 +9,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jib-maven-plugin.version>3.1.2</jib-maven-plugin.version>
     <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-    <image-registry>registry.mycorp.com:5000</image-registry>
   </properties>
 
   <dependencies>
@@ -33,35 +31,23 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-
-      <!-- Jib -->
       <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <version>${jib-maven-plugin.version}</version>
-        <configuration>
-          <allowInsecureRegistries>true</allowInsecureRegistries>
-          <from>
-            <image>openjdk:8-jre-stretch</image>
-          </from>
-          <to>
-            <image>${image-registry}/${project.artifactId}:${project.version}</image>
-          </to>
-          <container>
-            <labels>
-              <io.snyk.containers.image.remediation.schema_version>SemVer</io.snyk.containers.image.remediation.schema_version>
-              <io.snyk.containers.image.remediation.image_family>${project.artifactId}</io.snyk.containers.image.remediation.image_family>
-              <io.snyk.containers.image.remediation.image.version>${project.version}</io.snyk.containers.image.remediation.image.version>
-              <io.snyk.containers.image.remediation.image.type>base-image</io.snyk.containers.image.remediation.image.type>
-            </labels>
-          </container>
-        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
         <executions>
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>build</goal>
+              <goal>shade</goal>
             </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>example.HelloWorld</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
       </plugin>

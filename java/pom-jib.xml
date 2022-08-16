@@ -9,9 +9,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jib-maven-plugin.version>3.1.2</jib-maven-plugin.version>
+    <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
     <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-    <image-registry>registry.mycorp.com:5000</image-registry>
+    <image-registry>localhost:5000</image-registry>
   </properties>
 
   <dependencies>
@@ -32,6 +32,26 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>example.HelloWorld</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <!-- Jib -->
