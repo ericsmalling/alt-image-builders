@@ -8,6 +8,9 @@ spec:
       run: hello-server
   replicas: 2
   template:
+    metadata:
+      labels:
+        run: hello-server
     spec:
       containers:
         - name: hello-server
