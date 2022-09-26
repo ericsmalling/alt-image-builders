@@ -1,3 +1,3 @@
-module github.com/ericsmalling/ko-demo
+module github.com/ericsmalling/alt-image-builders/golang
 
-go 1.18
+go 1.19

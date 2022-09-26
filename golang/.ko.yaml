@@ -1,0 +1,12 @@
+#defaultBaseImage: repo.mycorp.com/myteam/corp-approved-scratch:220923
+
+builds:
+  - id: hello
+    dir: .
+    main: hello.go
+    env:
+      - GOOS=linux
+      - CGO_ENABLED=0
+    ldflags:
+      - -extldflags "-static"
+      - -linkmode external
